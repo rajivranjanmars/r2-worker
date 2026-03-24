@@ -1,0 +1,10 @@
+name = "r2-worker"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+[[routes]]
+pattern = "content.lpu.social/*"
+zone_name = "lpu.social"
+
+[observability]
+enabled = true
