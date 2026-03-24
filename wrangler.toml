@@ -3,8 +3,8 @@ main = "src/index.js"
 compatibility_date = "2024-01-01"
 
 [[routes]]
-pattern = "content.lpu.social/*"
-zone_name = "lpu.social"
+pattern = "content.r24.dev/*"
+zone_name = "r24.dev"
 
 [observability]
 enabled = true
