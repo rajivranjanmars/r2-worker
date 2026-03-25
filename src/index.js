@@ -1,5 +1,5 @@
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const key = url.pathname.slice(1);
 
@@ -20,26 +20,40 @@ export default {
       return new Response("Not Found", { status: 404, headers: corsHeaders });
     }
 
-    // Fetch from R2 with Cloudflare CDN caching (global, per PoP)
+    // Clean cache key (strip query params)
+    const cacheKey = new Request(new URL(url.pathname, url.origin).toString());
+    const cache = caches.default;
+
+    // 1. Check cache first
+    const cached = await cache.match(cacheKey);
+    if (cached) {
+      const response = new Response(cached.body, cached);
+      response.headers.set("x-cache-status", "HIT");
+      return response;
+    }
+
+    // 2. Cache miss — fetch from R2
     const r2Url = `${env.R2_URL}/${key}`;
-    const r2Response = await fetch(r2Url, {
-      cf: {
-        cacheEverything: true,
-        cacheTtl: 5184000,
-      },
-    });
+    const r2Response = await fetch(r2Url);
 
     if (!r2Response.ok) {
       return new Response("Not Found", { status: 404, headers: corsHeaders });
     }
 
+    // 3. Build cacheable response with 60-day TTL
     const headers = new Headers(r2Response.headers);
     headers.set("Cache-Control", "public, max-age=5184000, s-maxage=5184000, immutable");
+    headers.set("x-cache-status", "MISS");
     Object.entries(corsHeaders).forEach(([k, v]) => headers.set(k, v));
 
-    return new Response(r2Response.body, {
+    const response = new Response(r2Response.body, {
       status: r2Response.status,
       headers,
     });
+
+    // 4. Store in cache (non-blocking)
+    ctx.waitUntil(cache.put(cacheKey, response.clone()));
+
+    return response;
   },
 };
