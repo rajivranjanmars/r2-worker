@@ -2,6 +2,16 @@
 
 Cloudflare Worker that proxies requests from `TARGET_URL` to an R2 bucket's public URL.
 
+## change wrangler.toml
+
+```json
+[[routes]]
+pattern = "content.r24.dev/*"   //intneded url
+zone_name = "r24.dev"    //root domain
+```
+
+
+
 ## Setup
 
 ### 1. Project Init
@@ -44,7 +54,7 @@ npx wrangler secret put R2_URL
 # Paste: https://pub-<hash>.r2.dev
 
 npx wrangler secret put TARGET_URL
-# Paste: https://content.lpu.social
+# Paste: https://content.r24.dev
 ```
 
 ### 4. ReDeploy 
