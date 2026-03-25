@@ -80,3 +80,7 @@ https://content.lpu.social/custom_voice.onnx
 
 Observability is enabled. View logs at:
 **Cloudflare Dashboard → Workers → r2-worker → Logs**
+
+## MinIO (Optional)
+
+[.](https://paste.r24.dev/ixamemopug.less)
