@@ -7,4 +7,9 @@ pattern = "content.r24.dev/*"
 zone_name = "r24.dev"
 
 [observability]
+[observability.logs]
 enabled = true
+invocation_logs = true
+
+[observability.traces]
+enabled true

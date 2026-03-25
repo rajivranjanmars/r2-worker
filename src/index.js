@@ -37,6 +37,9 @@ export default {
     headers.set("Cache-Control", "public, max-age=5184000, s-maxage=5184000, immutable");
     Object.entries(corsHeaders).forEach(([k, v]) => headers.set(k, v));
 
-    return new Response(r2Response.body, { headers });
+    return new Response(r2Response.body, {
+      status: r2Response.status,
+      headers,
+    });
   },
 };
