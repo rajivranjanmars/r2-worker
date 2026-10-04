@@ -84,3 +84,7 @@ Observability is enabled. View logs at:
 ## MinIO (Optional)
 
 [.](https://paste.r24.dev/ixamemopug.less)
+
+## Author
+
+Author: [rajivranjanmars](https://rajivranjana.in).
