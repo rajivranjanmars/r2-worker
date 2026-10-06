@@ -87,4 +87,4 @@ Observability is enabled. View logs at:
 
 ## Author
 
-Author: [rajivranjanmars](https://rajivranjana.in).
+Author: [Rajiv Ranjan](https://rajivranjan.in).
