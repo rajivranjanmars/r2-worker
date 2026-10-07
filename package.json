@@ -13,7 +13,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "wrangler": "^4.77.0"
+    "wrangler": "^4.133.0"
   },
   "dependencies": {
     "aws4fetch": "^1.0.20"
